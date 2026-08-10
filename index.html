@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recicla Livros — Coleta de livros usados em casa</title>
+<meta name="description" content="Doe seus livros esquecidos. Buscamos gratuitamente na sua casa e damos a eles uma nova história.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --verde-escuro:#2E7D32;
+    --verde-claro:#4CAF50;
+    --papel:#F5F5DC;
+    --madeira:#D7CCC8;
+    --ocre:#FFA726;
+    --creme:#FAF9F6;
+  }
+  html{ scroll-behavior: smooth; }
+  body{
+    font-family:'Nunito', sans-serif;
+    background:var(--creme);
+    color:#3B3229;
+  }
+  h1,h2,h3,.display{ font-family:'Fredoka', sans-serif; }
+
+  /* textura sutil de papel */
+  .paper-texture{
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(0,0,0,0.015) 0, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(0,0,0,0.02) 0, transparent 45%);
+  }
+
+  /* borda de "página rasgada" entre seções */
+  .torn-edge{
+    position:relative;
+    display:block;
+    width:100%;
+    height:36px;
+    margin-top:-1px;
+  }
+  .torn-edge svg{ display:block; width:100%; height:100%; }
+
+  /* trilha de folha que conecta os passos */
+  .leaf-path-wrap{ position:relative; }
+  .leaf-dot{
+    position:relative;
+    z-index:2;
+  }
+
+  @keyframes float-slow{
+    0%,100%{ transform: translateY(0) rotate(-3deg); }
+    50%{ transform: translateY(-14px) rotate(2deg); }
+  }
+  @keyframes float-slower{
+    0%,100%{ transform: translateY(0) rotate(4deg); }
+    50%{ transform: translateY(-10px) rotate(-2deg); }
+  }
+  .float-a{ animation: float-slow 6s ease-in-out infinite; }
+  .float-b{ animation: float-slower 7.5s ease-in-out infinite; }
+
+  @media (prefers-reduced-motion: reduce){
+    .float-a, .float-b{ animation:none; }
+  }
+
+  .btn-shadow{ box-shadow: 0 8px 0 0 #1B5E20; }
+  .btn-shadow:active{ box-shadow: 0 3px 0 0 #1B5E20; transform: translateY(5px); }
+
+  .card-hover{ transition: transform .25s ease, box-shadow .25s ease; }
+  .card-hover:hover{ transform: translateY(-6px) rotate(-0.4deg); box-shadow: 0 18px 30px -12px rgba(46,125,50,0.25); }
+
+  .underline-squiggle{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M0 8 Q 25 0, 50 8 T 100 8 T 150 8 T 200 8' stroke='%23FFA726' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 100% 14px;
+  }
+
+  :focus-visible{
+    outline: 3px solid var(--ocre);
+    outline-offset: 3px;
+  }
+
+  .whatsapp-pulse::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:9999px;
+    background: rgba(76,175,80,0.55);
+    animation: pulse-ring 2.2s cubic-bezier(0.4,0,0.6,1) infinite;
+  }
+  @keyframes pulse-ring{
+    0%{ transform: scale(1); opacity:.6; }
+    80%{ transform: scale(1.5); opacity:0; }
+    100%{ transform: scale(1.5); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .whatsapp-pulse::before{ animation:none; display:none; }
+  }
+</style>
+</head>
+<body class="paper-texture">
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-sm border-b border-[#E4DCCB]">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2">
+      <span class="text-2xl">📚</span>
+      <span class="display font-semibold text-lg sm:text-xl text-[#2E7D32]">Recicla Livros</span>
+    </a>
+    <a href="#contato"
+       class="hidden sm:inline-flex items-center gap-2 bg-[#4CAF50] hover:bg-[#2E7D32] text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+      Solicitar coleta
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="relative pt-28 sm:pt-32 pb-24 sm:pb-32 overflow-hidden bg-gradient-to-b from-[#EAF3EA] to-[#FAF9F6]">
+  <!-- elementos flutuantes decorativos -->
+  <div aria-hidden="true" class="pointer-events-none select-none">
+    <span class="absolute top-24 left-4 sm:left-10 text-4xl sm:text-6xl float-a opacity-80">🍃</span>
+    <span class="absolute top-40 right-6 sm:right-16 text-3xl sm:text-5xl float-b opacity-80">📖</span>
+    <span class="absolute bottom-10 left-8 sm:left-24 text-3xl sm:text-4xl float-b opacity-70">🌱</span>
+    <span class="absolute bottom-24 right-4 sm:right-28 text-4xl sm:text-5xl float-a opacity-70">📗</span>
+  </div>
+
+  <div class="relative max-w-3xl mx-auto px-6 text-center">
+    <span class="inline-block bg-[#FFA726]/20 text-[#B85C00] font-semibold text-xs sm:text-sm tracking-wide px-4 py-1.5 rounded-full mb-6 border border-[#FFA726]/40">
+      ♻️ Coleta 100% gratuita, direto na sua porta
+    </span>
+
+    <h1 class="display font-semibold text-[2.1rem] leading-[1.15] sm:text-5xl sm:leading-[1.15] text-[#1B5E20]">
+      Seus livros velhos têm uma
+      <span class="underline-squiggle">nova história</span>
+      para contar: doar é dar vida nova ao papel!
+    </h1>
+
+    <p class="mt-6 text-base sm:text-lg text-[#5A5048] max-w-xl mx-auto">
+      Buscamos os livros parados na sua estante <strong class="text-[#2E7D32]">sem nenhum custo</strong>, direto na sua casa. Você não sai do sofá — a gente cuida do resto.
+    </p>
+
+    <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="#contato"
+         class="btn-shadow inline-flex items-center gap-2 bg-[#4CAF50] hover:bg-[#43A047] text-white display font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl transition-colors">
+        📦 Solicitar Coleta em Casa
+      </a>
+      <a href="#como-funciona"
+         class="inline-flex items-center gap-1.5 text-[#5A5048] font-semibold text-sm sm:text-base hover:text-[#2E7D32] transition-colors">
+        Ver como funciona ↓
+      </a>
+    </div>
+  </div>
+
+  <span class="torn-edge">
+    <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+      <path d="M0 20 L40 5 L80 28 L120 8 L160 24 L200 6 L240 22 L280 10 L320 26 L360 4 L400 20 L440 9 L480 27 L520 12 L560 22 L600 6 L640 24 L680 10 L720 28 L760 6 L800 22 L840 9 L880 26 L920 12 L960 24 L1000 6 L1040 22 L1080 10 L1120 28 L1160 8 L1200 20 L1200 40 L0 40 Z" fill="#FAF9F6"/>
+    </svg>
+  </span>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona" class="bg-[#FAF9F6] py-20 sm:py-28">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center max-w-xl mx-auto mb-16">
+      <span class="display text-[#FFA726] font-semibold text-sm tracking-widest uppercase">O caminho do livro</span>
+      <h2 class="display font-semibold text-3xl sm:text-4xl text-[#1B5E20] mt-2">Como funciona?</h2>
+      <p class="mt-3 text-[#5A5048]">Três passos simples, do jeito que ninguém precisa sair de casa.</p>
+    </div>
+
+    <div class="leaf-path-wrap grid sm:grid-cols-3 gap-8 sm:gap-6 relative">
+      <!-- trilha conectando os cards, só em telas maiores -->
+      <div aria-hidden="true" class="hidden sm:block absolute top-10 left-0 right-0 h-0.5">
+        <svg viewBox="0 0 800 20" class="w-full h-5" preserveAspectRatio="none">
+          <path d="M0 10 Q 200 -10, 400 10 T 800 10" stroke="#C8DFC9" stroke-width="3" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <!-- passo 1 -->
+      <div class="card-hover leaf-dot bg-white border border-[#EDE7DD] rounded-3xl p-7 text-center relative">
+        <div class="mx-auto w-16 h-16 rounded-full bg-[#EAF3EA] flex items-center justify-center text-3xl mb-4">📚</div>
+        <h3 class="display font-semibold text-lg text-[#2E7D32]">Separe os livros</h3>
+        <p class="mt-2 text-sm text-[#5A5048]">Reúna aqueles didáticos, romances e gibis que já cumpriram sua missão na sua estante.</p>
+      </div>
+
+      <!-- passo 2 -->
+      <div class="card-hover leaf-dot bg-white border border-[#EDE7DD] rounded-3xl p-7 text-center relative">
+        <div class="mx-auto w-16 h-16 rounded-full bg-[#EAF3EA] flex items-center justify-center text-3xl mb-4">💬</div>
+        <h3 class="display font-semibold text-lg text-[#2E7D32]">Chame no WhatsApp</h3>
+        <p class="mt-2 text-sm text-[#5A5048]">Mande uma mensagem com seu endereço e combine o melhor horário para você.</p>
+      </div>
+
+      <!-- passo 3 -->
+      <div class="card-hover leaf-dot bg-white border border-[#EDE7DD] rounded-3xl p-7 text-center relative">
+        <div class="mx-auto w-16 h-16 rounded-full bg-[#EAF3EA] flex items-center justify-center text-3xl mb-4">🚲</div>
+        <h3 class="display font-semibold text-lg text-[#2E7D32]">Nós buscamos</h3>
+        <p class="mt-2 text-sm text-[#5A5048]">Vamos até você recolher os livros e damos o destino certo: reuso ou reciclagem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE PARTICIPAR -->
+<section class="relative py-20 sm:py-28 bg-[#EFEAE3]">
+  <span class="torn-edge -mt-9 rotate-180">
+    <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
+      <path d="M0 20 L40 5 L80 28 L120 8 L160 24 L200 6 L240 22 L280 10 L320 26 L360 4 L400 20 L440 9 L480 27 L520 12 L560 22 L600 6 L640 24 L680 10 L720 28 L760 6 L800 22 L840 9 L880 26 L920 12 L960 24 L1000 6 L1040 22 L1080 10 L1120 28 L1160 8 L1200 20 L1200 40 L0 40 Z" fill="#EFEAE3"/>
+    </svg>
+  </span>
+
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center max-w-xl mx-auto mb-14">
+      <span class="display text-[#FFA726] font-semibold text-sm tracking-widest uppercase">O impacto</span>
+      <h2 class="display font-semibold text-3xl sm:text-4xl text-[#1B5E20] mt-2">Por que participar?</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="bg-[#FAF9F6] rounded-3xl p-7 border border-[#E4DCCB]">
+        <div class="text-3xl mb-3">🌎</div>
+        <h3 class="display font-semibold text-[#2E7D32] text-lg">Menos lixo, menos desperdício</h3>
+        <p class="mt-2 text-sm text-[#5A5048]">Cada livro reaproveitado é papel que não vira entulho e árvore que não precisa ser cortada.</p>
+      </div>
+      <div class="bg-[#FAF9F6] rounded-3xl p-7 border border-[#E4DCCB]">
+        <div class="text-3xl mb-3">📖</div>
+        <h3 class="display font-semibold text-[#2E7D32] text-lg">Conhecimento em movimento</h3>
+        <p class="mt-2 text-sm text-[#5A5048]">Livros parados numa estante não ensinam ninguém. Circulando, eles chegam a quem precisa ler.</p>
+      </div>
+      <div class="bg-[#FAF9F6] rounded-3xl p-7 border border-[#E4DCCB]">
+        <div class="text-3xl mb-3">🛋️</div>
+        <h3 class="display font-semibold text-[#2E7D32] text-lg">Praticidade total</h3>
+        <p class="mt-2 text-sm text-[#5A5048]">Sem levar sacola pesada a lugar nenhum. Você agenda, a gente bate na sua porta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO / AGENDAMENTO -->
+<section id="contato" class="py-20 sm:py-28 bg-[#FAF9F6]">
+  <div class="max-w-2xl mx-auto px-6">
+    <div class="relative bg-gradient-to-br from-[#2E7D32] to-[#1B5E20] rounded-[2rem] p-8 sm:p-12 text-center overflow-hidden">
+      <span aria-hidden="true" class="absolute -top-6 -right-6 text-8xl opacity-10 rotate-12">📚</span>
+      <span aria-hidden="true" class="absolute -bottom-8 -left-8 text-8xl opacity-10 -rotate-12">🍃</span>
+
+      <h2 class="display font-semibold text-2xl sm:text-3xl text-white relative">
+        Pronto pra dar um novo destino aos seus livros?
+      </h2>
+      <p class="mt-3 text-white/85 relative">
+        Fale com a gente agora pelo WhatsApp e agende sua coleta gratuita em poucos minutos.
+      </p>
+
+      <div class="mt-8 relative flex justify-center">
+        <a href="https://wa.me/5511986368641?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20coleta%20de%20livros%20na%20minha%20casa."
+           target="_blank" rel="noopener noreferrer"
+           class="relative inline-flex items-center gap-3 bg-[#FFA726] hover:bg-[#FB8C00] text-[#1B5E20] display font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl transition-colors">
+          <span class="relative flex h-3 w-3">
+            <span class="whatsapp-pulse absolute inline-flex h-full w-full rounded-full"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+          </span>
+          Chamar no WhatsApp
+        </a>
+      </div>
+
+      <p class="mt-5 text-xs text-white/60 relative">Resposta rápida · Sem custo · Sem compromisso</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#1B5E20] py-8">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/80 text-sm">
+    <span class="flex items-center gap-2 display font-medium text-white">📚 Recicla Livros</span>
+    <span>Dando vida nova ao papel, uma casa de cada vez. 🌱</span>
+  </div>
+</footer>
+
+</body>
+</html>
