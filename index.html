@@ -3,276 +3,297 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Recicla Livros — Coleta de livros usados em casa</title>
-<meta name="description" content="Doe seus livros esquecidos. Buscamos gratuitamente na sua casa e damos a eles uma nova história.">
+<title>GMC — Recicla Livros | Coleta de livros usados em casa</title>
+<meta name="description" content="GMC - Recicla Livros: doe seus livros esquecidos. Coleta 100% gratuita, direto na sua casa.">
 
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
   :root{
-    --verde-escuro:#2E7D32;
-    --verde-claro:#4CAF50;
-    --papel:#F5F5DC;
-    --madeira:#D7CCC8;
-    --ocre:#FFA726;
-    --creme:#FAF9F6;
+    --sand:#F8F6F0;
+    --sand-deep:#EDE6D8;
+    --card:#F0E9DA;
+    --moss:#1C352D;
+    --moss-deep:#12241E;
+    --moss-soft:#4C6B5B;
+    --earth:#A9764F;
+    --earth-soft:#C99B6F;
+    --leaf:#7A9B6E;
+    --ink:#2B2620;
   }
   html{ scroll-behavior: smooth; }
   body{
-    font-family:'Nunito', sans-serif;
-    background:var(--creme);
-    color:#3B3229;
+    font-family:'Inter', sans-serif;
+    background:var(--sand);
+    color:var(--ink);
   }
-  h1,h2,h3,.display{ font-family:'Fredoka', sans-serif; }
+  h1,h2,h3,.display,.brand{ font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:-0.01em; }
 
-  /* textura sutil de papel */
   .paper-texture{
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(0,0,0,0.015) 0, transparent 40%),
-      radial-gradient(circle at 80% 60%, rgba(0,0,0,0.02) 0, transparent 45%);
+      radial-gradient(circle at 15% 15%, rgba(45,74,62,0.03) 0, transparent 42%),
+      radial-gradient(circle at 85% 65%, rgba(169,118,79,0.05) 0, transparent 48%);
   }
 
-  /* borda de "página rasgada" entre seções */
-  .torn-edge{
-    position:relative;
-    display:block;
-    width:100%;
-    height:36px;
-    margin-top:-1px;
+  .divider-wave{
+    display:block; width:100%; height:44px; margin-top:-1px; line-height:0;
   }
-  .torn-edge svg{ display:block; width:100%; height:100%; }
+  .divider-wave svg{ display:block; width:100%; height:100%; }
 
-  /* trilha de folha que conecta os passos */
-  .leaf-path-wrap{ position:relative; }
-  .leaf-dot{
-    position:relative;
-    z-index:2;
+  .btn-primary{
+    background: var(--moss);
+    color: #fff;
+    box-shadow: 0 10px 24px -10px rgba(33,58,48,0.55);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
   }
+  .btn-primary:hover{ background: var(--moss-deep); transform: translateY(-2px); box-shadow: 0 14px 28px -10px rgba(33,58,48,0.6); }
+  .btn-primary:active{ transform: translateY(0); }
 
-  @keyframes float-slow{
-    0%,100%{ transform: translateY(0) rotate(-3deg); }
-    50%{ transform: translateY(-14px) rotate(2deg); }
+  .btn-accent{
+    background: var(--earth-soft);
+    color: var(--moss-deep);
+    box-shadow: 0 10px 24px -10px rgba(169,118,79,0.55);
+    transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
   }
-  @keyframes float-slower{
-    0%,100%{ transform: translateY(0) rotate(4deg); }
-    50%{ transform: translateY(-10px) rotate(-2deg); }
-  }
-  .float-a{ animation: float-slow 6s ease-in-out infinite; }
-  .float-b{ animation: float-slower 7.5s ease-in-out infinite; }
+  .btn-accent:hover{ background: var(--earth); color:#fff; transform: translateY(-2px); }
 
-  @media (prefers-reduced-motion: reduce){
-    .float-a, .float-b{ animation:none; }
-  }
+  .card-hover{ transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease; }
+  .card-hover:hover{ transform: translateY(-5px); box-shadow: 0 20px 34px -18px rgba(45,74,62,0.28); border-color: var(--leaf); }
 
-  .btn-shadow{ box-shadow: 0 8px 0 0 #1B5E20; }
-  .btn-shadow:active{ box-shadow: 0 3px 0 0 #1B5E20; transform: translateY(5px); }
-
-  .card-hover{ transition: transform .25s ease, box-shadow .25s ease; }
-  .card-hover:hover{ transform: translateY(-6px) rotate(-0.4deg); box-shadow: 0 18px 30px -12px rgba(46,125,50,0.25); }
-
-  .underline-squiggle{
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 14' preserveAspectRatio='none'%3E%3Cpath d='M0 8 Q 25 0, 50 8 T 100 8 T 150 8 T 200 8' stroke='%23FFA726' stroke-width='6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: 0 88%;
-    background-size: 100% 14px;
+  .underline-brush{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 16' preserveAspectRatio='none'%3E%3Cpath d='M2 10 C 40 2, 70 14, 110 8 S 180 2, 218 9' stroke='%23C99B6F' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:0 92%;
+    background-size:100% 16px;
   }
 
-  :focus-visible{
-    outline: 3px solid var(--ocre);
-    outline-offset: 3px;
-  }
+  :focus-visible{ outline: 3px solid var(--earth); outline-offset: 3px; }
 
-  .whatsapp-pulse::before{
+  .pulse-dot::before{
     content:"";
-    position:absolute;
-    inset:0;
+    position:absolute; inset:0;
     border-radius:9999px;
-    background: rgba(76,175,80,0.55);
+    background: rgba(122,155,110,0.6);
     animation: pulse-ring 2.2s cubic-bezier(0.4,0,0.6,1) infinite;
   }
   @keyframes pulse-ring{
     0%{ transform: scale(1); opacity:.6; }
-    80%{ transform: scale(1.5); opacity:0; }
-    100%{ transform: scale(1.5); opacity:0; }
+    80%{ transform: scale(1.6); opacity:0; }
+    100%{ transform: scale(1.6); opacity:0; }
   }
   @media (prefers-reduced-motion: reduce){
-    .whatsapp-pulse::before{ animation:none; display:none; }
+    .pulse-dot::before{ animation:none; display:none; }
   }
+
+  @keyframes drift{
+    0%,100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-10px) rotate(2deg); }
+  }
+  .drift{ animation: drift 8s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){ .drift{ animation:none; } }
 </style>
 </head>
 <body class="paper-texture">
 
+<!-- Símbolo da marca: livro aberto com brotos de folhas (reutilizado no header, hero, contato e rodapé) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="gmc-mark" viewBox="0 0 64 64">
+      <path d="M8 45 C8 45 20 39.5 30 43.5 L30 17 C20 13 8 18.5 8 18.5 Z" fill="#8B6142"/>
+      <path d="M56 45 C56 45 44 39.5 34 43.5 L34 17 C44 13 56 18.5 56 18.5 Z" fill="#A9764F"/>
+      <path d="M30 17 L30 43.5 M34 17 L34 43.5" stroke="#6B4A32" stroke-width="1.1" fill="none"/>
+      <path d="M12 24 L24 21 M12 29.5 L24 26.5 M12 35 L24 32" stroke="#F0E9DA" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
+      <path d="M52 24 L40 21 M52 29.5 L40 26.5 M52 35 L40 32" stroke="#F0E9DA" stroke-width="1.4" stroke-linecap="round" opacity="0.85"/>
+      <path d="M32 17 C32 17 32 11 32 7" stroke="#4C6B5B" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+      <path d="M32 11.5 C25.5 9.5 21 3.5 23 1.5 C27.5 2.5 33 7 32 11.5 Z" fill="#7A9B6E"/>
+      <path d="M32 8.5 C38.5 6.5 43 1.5 41 0 C36.5 1 31 5 32 8.5 Z" fill="#4C6B5B"/>
+    </symbol>
+  </defs>
+</svg>
+
 <!-- NAV -->
-<header class="fixed top-0 inset-x-0 z-50 bg-[#FAF9F6]/90 backdrop-blur-sm border-b border-[#E4DCCB]">
-  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between">
-    <a href="#top" class="flex items-center gap-2">
-      <span class="text-2xl">📚</span>
-      <span class="display font-semibold text-lg sm:text-xl text-[#2E7D32]">Recicla Livros</span>
+<header class="fixed top-0 inset-x-0 z-50 bg-[#F8F6F0]/90 backdrop-blur-sm border-b border-[#E3D9C6]">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-3.5 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5">
+      <span class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#F0E9DA] flex items-center justify-center shrink-0">
+        <svg class="w-5 h-5 sm:w-6 sm:h-6" aria-hidden="true"><use href="#gmc-mark"></use></svg>
+      </span>
+      <span class="flex items-baseline gap-2 leading-tight">
+        <span class="brand font-extrabold text-lg sm:text-xl text-[#1C352D] tracking-tight">GMC</span>
+        <span class="text-xs sm:text-sm font-medium text-[#8A8072]">Recicla Livros</span>
+      </span>
     </a>
     <a href="#contato"
-       class="hidden sm:inline-flex items-center gap-2 bg-[#4CAF50] hover:bg-[#2E7D32] text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors">
+       class="hidden sm:inline-flex items-center gap-2 btn-primary font-semibold text-sm px-5 py-2.5 rounded-full">
       Solicitar coleta
     </a>
   </div>
 </header>
 
 <!-- HERO -->
-<section id="top" class="relative pt-28 sm:pt-32 pb-24 sm:pb-32 overflow-hidden bg-gradient-to-b from-[#EAF3EA] to-[#FAF9F6]">
-  <!-- elementos flutuantes decorativos -->
-  <div aria-hidden="true" class="pointer-events-none select-none">
-    <span class="absolute top-24 left-4 sm:left-10 text-4xl sm:text-6xl float-a opacity-80">🍃</span>
-    <span class="absolute top-40 right-6 sm:right-16 text-3xl sm:text-5xl float-b opacity-80">📖</span>
-    <span class="absolute bottom-10 left-8 sm:left-24 text-3xl sm:text-4xl float-b opacity-70">🌱</span>
-    <span class="absolute bottom-24 right-4 sm:right-28 text-4xl sm:text-5xl float-a opacity-70">📗</span>
+<section id="top" class="relative pt-28 sm:pt-36 pb-24 sm:pb-32 overflow-hidden">
+  <div aria-hidden="true" class="pointer-events-none select-none absolute inset-0">
+    <div class="drift absolute top-24 left-4 sm:left-14 w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-[#7A9B6E]/15 blur-sm"></div>
+    <div class="drift absolute bottom-16 right-6 sm:right-20 w-20 h-20 sm:w-28 sm:h-28 rounded-full bg-[#C99B6F]/20 blur-sm" style="animation-delay:1.2s"></div>
+    <div class="absolute top-10 right-0 w-1/2 h-full bg-gradient-to-bl from-[#EDE6D8] to-transparent opacity-60"></div>
   </div>
 
   <div class="relative max-w-3xl mx-auto px-6 text-center">
-    <span class="inline-block bg-[#FFA726]/20 text-[#B85C00] font-semibold text-xs sm:text-sm tracking-wide px-4 py-1.5 rounded-full mb-6 border border-[#FFA726]/40">
+    <span class="inline-flex w-20 h-20 sm:w-24 sm:h-24 rounded-full items-center justify-center bg-[#F0E9DA] mb-7 shadow-sm shadow-[#1C352D]/10">
+      <svg class="w-11 h-11 sm:w-14 sm:h-14" aria-hidden="true"><use href="#gmc-mark"></use></svg>
+    </span>
+
+    <span class="inline-block bg-[#1C352D]/8 text-[#1C352D] font-semibold text-xs sm:text-sm tracking-wide px-4 py-1.5 rounded-full mb-6 border border-[#1C352D]/20">
       ♻️ Coleta 100% gratuita, direto na sua porta
     </span>
 
-    <h1 class="display font-semibold text-[2.1rem] leading-[1.15] sm:text-5xl sm:leading-[1.15] text-[#1B5E20]">
-      Seus livros velhos têm uma
-      <span class="underline-squiggle">nova história</span>
-      para contar: doar é dar vida nova ao papel!
+    <h1 class="display font-extrabold text-[2.1rem] leading-[1.15] sm:text-5xl sm:leading-[1.15] text-[#1C352D]">
+      Livros que continuam
+      <span class="underline-brush">fazendo história</span>.
     </h1>
 
-    <p class="mt-6 text-base sm:text-lg text-[#5A5048] max-w-xl mx-auto">
-      Buscamos os livros parados na sua estante <strong class="text-[#2E7D32]">sem nenhum custo</strong>, direto na sua casa. Você não sai do sofá — a gente cuida do resto.
+    <p class="mt-6 text-base sm:text-lg text-[#5A5245] max-w-xl mx-auto">
+      O <strong class="text-[#1C352D]">GMC</strong> é um projeto de reciclagem de livros que dá uma nova vida às páginas que você já não usa mais — sem sair de casa e sem custo.
     </p>
 
     <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
-      <a href="#contato"
-         class="btn-shadow inline-flex items-center gap-2 bg-[#4CAF50] hover:bg-[#43A047] text-white display font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl transition-colors">
-        📦 Solicitar Coleta em Casa
+      <a href="https://wa.me/5511948463119?text=Ol%C3%A1%2C%20Daniele!%20Gostaria%20de%20agendar%20uma%20coleta%20de%20livros%20na%20minha%20casa."
+         target="_blank" rel="noopener noreferrer"
+         class="btn-primary inline-flex items-center gap-2 display font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl">
+        Falar com a Daniele no WhatsApp
       </a>
       <a href="#como-funciona"
-         class="inline-flex items-center gap-1.5 text-[#5A5048] font-semibold text-sm sm:text-base hover:text-[#2E7D32] transition-colors">
+         class="inline-flex items-center gap-1.5 text-[#5A5245] font-semibold text-sm sm:text-base hover:text-[#1C352D] transition-colors">
         Ver como funciona ↓
       </a>
     </div>
   </div>
 
-  <span class="torn-edge">
-    <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
-      <path d="M0 20 L40 5 L80 28 L120 8 L160 24 L200 6 L240 22 L280 10 L320 26 L360 4 L400 20 L440 9 L480 27 L520 12 L560 22 L600 6 L640 24 L680 10 L720 28 L760 6 L800 22 L840 9 L880 26 L920 12 L960 24 L1000 6 L1040 22 L1080 10 L1120 28 L1160 8 L1200 20 L1200 40 L0 40 Z" fill="#FAF9F6"/>
+  <span class="divider-wave">
+    <svg viewBox="0 0 1200 44" preserveAspectRatio="none">
+      <path d="M0 24 C 150 44, 350 4, 600 24 C 850 44, 1050 4, 1200 24 L1200 44 L0 44 Z" fill="#F0E9DA"/>
     </svg>
   </span>
 </section>
 
 <!-- COMO FUNCIONA -->
-<section id="como-funciona" class="bg-[#FAF9F6] py-20 sm:py-28">
+<section id="como-funciona" class="bg-[#F0E9DA] py-20 sm:py-28">
   <div class="max-w-5xl mx-auto px-6">
     <div class="text-center max-w-xl mx-auto mb-16">
-      <span class="display text-[#FFA726] font-semibold text-sm tracking-widest uppercase">O caminho do livro</span>
-      <h2 class="display font-semibold text-3xl sm:text-4xl text-[#1B5E20] mt-2">Como funciona?</h2>
-      <p class="mt-3 text-[#5A5048]">Três passos simples, do jeito que ninguém precisa sair de casa.</p>
+      <span class="display text-[#A9764F] font-semibold text-sm tracking-widest uppercase">O caminho do livro</span>
+      <h2 class="display font-semibold text-3xl sm:text-4xl text-[#1C352D] mt-2">Como funciona?</h2>
+      <p class="mt-3 text-[#5A5245]">Três passos simples — do jeito que ninguém precisa sair de casa.</p>
     </div>
 
-    <div class="leaf-path-wrap grid sm:grid-cols-3 gap-8 sm:gap-6 relative">
-      <!-- trilha conectando os cards, só em telas maiores -->
-      <div aria-hidden="true" class="hidden sm:block absolute top-10 left-0 right-0 h-0.5">
-        <svg viewBox="0 0 800 20" class="w-full h-5" preserveAspectRatio="none">
-          <path d="M0 10 Q 200 -10, 400 10 T 800 10" stroke="#C8DFC9" stroke-width="3" fill="none" stroke-dasharray="2 10" stroke-linecap="round"/>
-        </svg>
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="card-hover bg-[#F8F6F0] border border-[#E3D9C6] rounded-3xl p-7 text-center">
+        <div class="mx-auto w-16 h-16 rounded-full bg-[#1C352D]/8 flex items-center justify-center text-2xl mb-4 text-[#1C352D]">📚</div>
+        <span class="text-xs font-semibold tracking-widest text-[#A9764F] uppercase">Passo 1</span>
+        <h3 class="display font-semibold text-lg text-[#1C352D] mt-1">Separe os livros</h3>
+        <p class="mt-2 text-sm text-[#5A5245]">Reúna aqueles didáticos, romances e gibis que já cumpriram sua missão na sua estante.</p>
       </div>
 
-      <!-- passo 1 -->
-      <div class="card-hover leaf-dot bg-white border border-[#EDE7DD] rounded-3xl p-7 text-center relative">
-        <div class="mx-auto w-16 h-16 rounded-full bg-[#EAF3EA] flex items-center justify-center text-3xl mb-4">📚</div>
-        <h3 class="display font-semibold text-lg text-[#2E7D32]">Separe os livros</h3>
-        <p class="mt-2 text-sm text-[#5A5048]">Reúna aqueles didáticos, romances e gibis que já cumpriram sua missão na sua estante.</p>
+      <div class="card-hover bg-[#F8F6F0] border border-[#E3D9C6] rounded-3xl p-7 text-center">
+        <div class="mx-auto w-16 h-16 rounded-full bg-[#1C352D]/8 flex items-center justify-center text-2xl mb-4 text-[#1C352D]">💬</div>
+        <span class="text-xs font-semibold tracking-widest text-[#A9764F] uppercase">Passo 2</span>
+        <h3 class="display font-semibold text-lg text-[#1C352D] mt-1">Chame no WhatsApp</h3>
+        <p class="mt-2 text-sm text-[#5A5245]">Fale com a Daniele, informe seu endereço e combine o melhor horário para você.</p>
       </div>
 
-      <!-- passo 2 -->
-      <div class="card-hover leaf-dot bg-white border border-[#EDE7DD] rounded-3xl p-7 text-center relative">
-        <div class="mx-auto w-16 h-16 rounded-full bg-[#EAF3EA] flex items-center justify-center text-3xl mb-4">💬</div>
-        <h3 class="display font-semibold text-lg text-[#2E7D32]">Chame no WhatsApp</h3>
-        <p class="mt-2 text-sm text-[#5A5048]">Mande uma mensagem com seu endereço e combine o melhor horário para você.</p>
-      </div>
-
-      <!-- passo 3 -->
-      <div class="card-hover leaf-dot bg-white border border-[#EDE7DD] rounded-3xl p-7 text-center relative">
-        <div class="mx-auto w-16 h-16 rounded-full bg-[#EAF3EA] flex items-center justify-center text-3xl mb-4">🚲</div>
-        <h3 class="display font-semibold text-lg text-[#2E7D32]">Nós buscamos</h3>
-        <p class="mt-2 text-sm text-[#5A5048]">Vamos até você recolher os livros e damos o destino certo: reuso ou reciclagem.</p>
+      <div class="card-hover bg-[#F8F6F0] border border-[#E3D9C6] rounded-3xl p-7 text-center">
+        <div class="mx-auto w-16 h-16 rounded-full bg-[#1C352D]/8 flex items-center justify-center text-2xl mb-4 text-[#1C352D]">🚲</div>
+        <span class="text-xs font-semibold tracking-widest text-[#A9764F] uppercase">Passo 3</span>
+        <h3 class="display font-semibold text-lg text-[#1C352D] mt-1">Nós buscamos</h3>
+        <p class="mt-2 text-sm text-[#5A5245]">Vamos até você recolher os livros, sem custo, e damos o destino certo: reuso ou reciclagem.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- POR QUE PARTICIPAR -->
-<section class="relative py-20 sm:py-28 bg-[#EFEAE3]">
-  <span class="torn-edge -mt-9 rotate-180">
-    <svg viewBox="0 0 1200 40" preserveAspectRatio="none">
-      <path d="M0 20 L40 5 L80 28 L120 8 L160 24 L200 6 L240 22 L280 10 L320 26 L360 4 L400 20 L440 9 L480 27 L520 12 L560 22 L600 6 L640 24 L680 10 L720 28 L760 6 L800 22 L840 9 L880 26 L920 12 L960 24 L1000 6 L1040 22 L1080 10 L1120 28 L1160 8 L1200 20 L1200 40 L0 40 Z" fill="#EFEAE3"/>
-    </svg>
-  </span>
-
+<section class="relative py-20 sm:py-28 bg-[#F8F6F0]">
   <div class="max-w-5xl mx-auto px-6">
     <div class="text-center max-w-xl mx-auto mb-14">
-      <span class="display text-[#FFA726] font-semibold text-sm tracking-widest uppercase">O impacto</span>
-      <h2 class="display font-semibold text-3xl sm:text-4xl text-[#1B5E20] mt-2">Por que participar?</h2>
+      <span class="display text-[#A9764F] font-semibold text-sm tracking-widest uppercase">O impacto</span>
+      <h2 class="display font-semibold text-3xl sm:text-4xl text-[#1C352D] mt-2">Por que participar?</h2>
     </div>
 
     <div class="grid sm:grid-cols-3 gap-6">
-      <div class="bg-[#FAF9F6] rounded-3xl p-7 border border-[#E4DCCB]">
-        <div class="text-3xl mb-3">🌎</div>
-        <h3 class="display font-semibold text-[#2E7D32] text-lg">Menos lixo, menos desperdício</h3>
-        <p class="mt-2 text-sm text-[#5A5048]">Cada livro reaproveitado é papel que não vira entulho e árvore que não precisa ser cortada.</p>
+      <div class="bg-[#F0E9DA] rounded-3xl p-7 border border-[#E3D9C6]">
+        <div class="w-12 h-12 rounded-2xl bg-[#7A9B6E]/20 flex items-center justify-center text-2xl mb-4">🌎</div>
+        <h3 class="display font-semibold text-[#1C352D] text-lg">Menos lixo, menos desperdício</h3>
+        <p class="mt-2 text-sm text-[#5A5245]">Cada livro reaproveitado é papel que não vira entulho e árvore que não precisa ser cortada.</p>
       </div>
-      <div class="bg-[#FAF9F6] rounded-3xl p-7 border border-[#E4DCCB]">
-        <div class="text-3xl mb-3">📖</div>
-        <h3 class="display font-semibold text-[#2E7D32] text-lg">Conhecimento em movimento</h3>
-        <p class="mt-2 text-sm text-[#5A5048]">Livros parados numa estante não ensinam ninguém. Circulando, eles chegam a quem precisa ler.</p>
+      <div class="bg-[#F0E9DA] rounded-3xl p-7 border border-[#E3D9C6]">
+        <div class="w-12 h-12 rounded-2xl bg-[#7A9B6E]/20 flex items-center justify-center text-2xl mb-4">📖</div>
+        <h3 class="display font-semibold text-[#1C352D] text-lg">Conhecimento em movimento</h3>
+        <p class="mt-2 text-sm text-[#5A5245]">Livros parados numa estante não ensinam ninguém. Circulando, eles chegam a quem precisa ler.</p>
       </div>
-      <div class="bg-[#FAF9F6] rounded-3xl p-7 border border-[#E4DCCB]">
-        <div class="text-3xl mb-3">🛋️</div>
-        <h3 class="display font-semibold text-[#2E7D32] text-lg">Praticidade total</h3>
-        <p class="mt-2 text-sm text-[#5A5048]">Sem levar sacola pesada a lugar nenhum. Você agenda, a gente bate na sua porta.</p>
+      <div class="bg-[#F0E9DA] rounded-3xl p-7 border border-[#E3D9C6]">
+        <div class="w-12 h-12 rounded-2xl bg-[#7A9B6E]/20 flex items-center justify-center text-2xl mb-4">🛋️</div>
+        <h3 class="display font-semibold text-[#1C352D] text-lg">Praticidade total</h3>
+        <p class="mt-2 text-sm text-[#5A5245]">Sem levar sacola pesada a lugar nenhum. Você agenda, a gente bate na sua porta.</p>
       </div>
     </div>
   </div>
+
+  <span class="divider-wave rotate-180 -mb-1">
+    <svg viewBox="0 0 1200 44" preserveAspectRatio="none">
+      <path d="M0 24 C 150 44, 350 4, 600 24 C 850 44, 1050 4, 1200 24 L1200 44 L0 44 Z" fill="#1C352D"/>
+    </svg>
+  </span>
 </section>
 
-<!-- CONTATO / AGENDAMENTO -->
-<section id="contato" class="py-20 sm:py-28 bg-[#FAF9F6]">
+<!-- CONTATO / CHAMADA FINAL -->
+<section id="contato" class="py-20 sm:py-28 bg-[#1C352D]">
   <div class="max-w-2xl mx-auto px-6">
-    <div class="relative bg-gradient-to-br from-[#2E7D32] to-[#1B5E20] rounded-[2rem] p-8 sm:p-12 text-center overflow-hidden">
-      <span aria-hidden="true" class="absolute -top-6 -right-6 text-8xl opacity-10 rotate-12">📚</span>
-      <span aria-hidden="true" class="absolute -bottom-8 -left-8 text-8xl opacity-10 -rotate-12">🍃</span>
+    <div class="relative bg-[#12241E] rounded-[2rem] p-8 sm:p-12 text-center overflow-hidden border border-white/5">
+      <span aria-hidden="true" class="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-[#7A9B6E]/10"></span>
+      <span aria-hidden="true" class="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-[#C99B6F]/10"></span>
+
+      <span class="inline-flex w-14 h-14 rounded-full items-center justify-center bg-[#F0E9DA] mb-6 relative">
+        <svg class="w-8 h-8" aria-hidden="true"><use href="#gmc-mark"></use></svg>
+      </span>
 
       <h2 class="display font-semibold text-2xl sm:text-3xl text-white relative">
         Pronto pra dar um novo destino aos seus livros?
       </h2>
-      <p class="mt-3 text-white/85 relative">
-        Fale com a gente agora pelo WhatsApp e agende sua coleta gratuita em poucos minutos.
+      <p class="mt-3 text-white/70 relative">
+        Fale com a Daniele Nascimento e agende sua coleta gratuita em poucos minutos.
       </p>
 
       <div class="mt-8 relative flex justify-center">
-        <a href="https://wa.me/5511986368641?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20coleta%20de%20livros%20na%20minha%20casa."
+        <a href="https://wa.me/5511948463119?text=Ol%C3%A1%2C%20Daniele!%20Gostaria%20de%20agendar%20uma%20coleta%20de%20livros%20na%20minha%20casa."
            target="_blank" rel="noopener noreferrer"
-           class="relative inline-flex items-center gap-3 bg-[#FFA726] hover:bg-[#FB8C00] text-[#1B5E20] display font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl transition-colors">
+           class="btn-accent relative inline-flex items-center gap-3 display font-semibold text-base sm:text-lg px-8 py-4 rounded-2xl">
           <span class="relative flex h-3 w-3">
-            <span class="whatsapp-pulse absolute inline-flex h-full w-full rounded-full"></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+            <span class="pulse-dot absolute inline-flex h-full w-full rounded-full"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-[#1C352D]"></span>
           </span>
           Chamar no WhatsApp
         </a>
       </div>
 
-      <p class="mt-5 text-xs text-white/60 relative">Resposta rápida · Sem custo · Sem compromisso</p>
+      <p class="mt-5 text-sm text-white/60 relative">
+        Daniele Nascimento · +55 11 94846-3119
+      </p>
+      <p class="mt-1 text-xs text-white/40 relative">Resposta rápida · Sem custo · Sem compromisso</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer class="bg-[#1B5E20] py-8">
-  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/80 text-sm">
-    <span class="flex items-center gap-2 display font-medium text-white">📚 Recicla Livros</span>
-    <span>Dando vida nova ao papel, uma casa de cada vez. 🌱</span>
+<footer class="bg-[#12241E] py-8">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-white/70 text-sm">
+    <span class="flex items-center gap-2 brand font-medium text-white">
+      <span class="w-6 h-6 rounded-full bg-[#F0E9DA] inline-flex items-center justify-center">
+        <svg class="w-4 h-4" aria-hidden="true"><use href="#gmc-mark"></use></svg>
+      </span>
+      GMC · Recicla Livros
+    </span>
+    <span>Dando vida nova ao papel, uma casa de cada vez.</span>
   </div>
 </footer>
 
